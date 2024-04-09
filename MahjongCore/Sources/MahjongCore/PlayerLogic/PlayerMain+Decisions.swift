@@ -5,6 +5,8 @@
 //  Created by Rex Ma on 4/8/24.
 //
 
+import MahjongCommons
+
 extension Player {
     public func canPong(_ mahjong: IMahjongFace) -> Bool {
         if mahjong.mahjongType == discardType {

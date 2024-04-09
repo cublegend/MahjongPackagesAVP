@@ -7,6 +7,7 @@
 
 import Foundation
 import RealityKit
+import MahjongCommons
 
 public class PlacedObject: Entity {
     public let fileName: String

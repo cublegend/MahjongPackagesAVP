@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MahjongCommons
 
 public protocol ICommand {
     func Execute();

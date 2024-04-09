@@ -6,6 +6,7 @@
 
 import Foundation
 import RealityKit
+import MahjongCommons
 
 @Observable
 class Player {
