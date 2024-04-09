@@ -11,10 +11,11 @@ import MahjongAnalyzer
 
 // TODO: make IMahjongAnalyzer a rule enum to be used in both analysis and rules and other things
 @Observable
-class Player<Style: IMahjongStyle> {
+class Player {
     public var playerID: String
     let entityManager: PlayerEntityManager
     let handManager: PlayerHandManager
+    let style: IMahjongStyle
     
     private(set) public var discardType: MahjongType? = .none
     public var discardTypeTiles: [MahjongEntity] = []
@@ -26,10 +27,11 @@ class Player<Style: IMahjongStyle> {
     // fan calculation flags
     var fans: [Fan] = []
     
-    init(playerId: String, rotation: simd_quatf, discardPile: NSMutableArray) {
+    init(playerId: String, rotation: simd_quatf, discardPile: NSMutableArray, style: IMahjongStyle) {
         self.playerID = playerId
         handManager = PlayerHandManager(discardPile: discardPile)
         entityManager = PlayerEntityManager(rotation: rotation)
+        self.style = style
     }
     
     public func resetPlayer() {

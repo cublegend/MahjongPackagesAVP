@@ -9,13 +9,19 @@ import Foundation
 import MahjongCommons
 
 /// This class delegates style specifc analyze logic to add another layer of encapsulation
-public class MahjongAnalyzer<Style: IMahjongStyle> {
+public class MahjongAnalyzer {
+    let style: IMahjongStyle
+    
+    public init(style: IMahjongStyle) {
+        self.style = style
+    }
+    
     public func findBestFanGroup(closeHand: [IMahjongFace], openHand: [IMahjongFace]) -> [Fan] {
-        return Style.findBestFanGroup(closeHand: closeHand, openHand: openHand)
+        return style.findBestFanGroup(closeHand: closeHand, openHand: openHand)
     }
     
     public func calculateShanten(closeHand: [IMahjongFace], completeSets: Int) -> Int {
-        return Style.calculateShanten(closeHand: closeHand, completeSets: completeSets)
+        return style.calculateShanten(closeHand: closeHand, completeSets: completeSets)
     }
 }
 

@@ -11,7 +11,11 @@ import MahjongCommons
 // TODO: implement rule enforcements and other style-specific actions
 // FIXME: also don't forget to extract common logics such as isPongPong(), etc. for other styles to use
 public class BloodyMahjong: IMahjongStyle {
-    public static var name = "Bloody Mahjong"
+    public var name = "Bloody Mahjong"
+    
+    public func calculateShanten(closeHand: [IMahjongFace], completeSets: Int) -> Int {
+        BloodyMahjong.calculateShanten(closeHand: closeHand, completeSets: completeSets)
+    }
     
     static func calculateShanten(closeHand: [IMahjongFace], completeSets: Int) -> Int {
         let hand = parseMahjongs(closeHand)
