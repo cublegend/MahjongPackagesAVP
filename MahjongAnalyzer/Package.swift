@@ -22,9 +22,12 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "MahjongAnalyzer",
-            dependencies: ["MahjongCommons"]),
+            dependencies: ["MahjongCommons"],
+            resources: [
+                .process("tables")
+            ]),
         .testTarget(
             name: "MahjongAnalyzerTests",
-            dependencies: ["MahjongAnalyzer"]),
+            dependencies: ["MahjongAnalyzer", "MahjongCommons"]),
     ]
 )
