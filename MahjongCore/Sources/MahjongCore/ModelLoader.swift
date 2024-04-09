@@ -17,9 +17,9 @@ public final class ModelLoader {
     private static var mahjongs = [MahjongEntity]()
     
     public static func getMahjongs() -> [MahjongEntity] {
-//        if !didFinishLoading {
-//            fatalError("Models didn't finish loading!")
-//        }
+        if !didFinishLoading {
+            fatalError("Models didn't finish loading!")
+        }
         return mahjongs
     }
     
@@ -41,26 +41,18 @@ public final class ModelLoader {
         guard resourceURLs.count != 0 else {
             fatalError("No models detected!")
         }
-        
-        await withTaskGroup(of: Void.self) { group in
+        do {
             for url in resourceURLs {
-                group.addTask {
-                    if url.lastPathComponent == "MahjongTable.usdz" {
-                        do {
-                            try await self.loadTable(url)
-                        } catch {
-                            fatalError("Failed loading table")
-                        }
-                    } else {
-                        do {
-                            try await loadMahjong(url)
-                        } catch {
-                            fatalError("Failed loading mahjongs")
-                        }
-                    }
+                if url.lastPathComponent == "MahjongTable.usdz" {
+                    try loadTable(url)
+                } else {
+                    try loadMahjong(url)
                 }
             }
+        } catch {
+            fatalError("Loading model error")
         }
+        
         didFinishLoading = true
     }
     
