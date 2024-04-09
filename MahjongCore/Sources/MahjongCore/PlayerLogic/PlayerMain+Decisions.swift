@@ -6,6 +6,7 @@
 //
 
 import MahjongCommons
+import MahjongAnalyzer
 
 extension Player {
     public func canPong(_ mahjong: IMahjongFace) -> Bool {
@@ -68,16 +69,14 @@ extension Player {
         }
         var tempHand = handManager.closeHandArr
         tempHand.append(mahjong)
-//        return HandUtil.calculateShanten(mahjongHand: tempHand, completeSets: openHandCompleteSets.count) == -1
-        return false
+        return Analyzer.calculateShanten(closeHand: tempHand, completeSets: openHandCompleteSets.count) == -1
     }
     
     public func canZimo() -> Bool {
         if discardTypeTiles.count != 0 {
             return false
         }
-//        return HandUtil.calculateShanten(mahjongHand: closedHand, completeSets: openHandCompleteSets.count) == -1
-        return false
+        return Analyzer.calculateShanten(closeHand: handManager.closeHandArr, completeSets: openHandCompleteSets.count) == -1
     }
     
     // MARK: The rest of the functions are internal, please access via Commands

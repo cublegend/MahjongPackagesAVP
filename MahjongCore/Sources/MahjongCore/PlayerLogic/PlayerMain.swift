@@ -7,12 +7,15 @@
 import Foundation
 import RealityKit
 import MahjongCommons
+import MahjongAnalyzer
 
+// TODO: make IMahjongAnalyzer a rule enum to be used in both analysis and rules and other things
 @Observable
-class Player {
+class Player<T: IMahjongAnalyzer> {
     public var playerID: String
     let entityManager: PlayerEntityManager
     let handManager: PlayerHandManager
+    typealias Analyzer = T
     
     private(set) public var discardType: MahjongType? = .none
     public var discardTypeTiles: [MahjongEntity] = []
