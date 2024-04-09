@@ -8,8 +8,8 @@
 import Foundation
 import MahjongCommons
 
-extension BloodyAnalyzer {
-    public static func findBestFanGroup(closeHand: [IMahjongFace], openHand: [IMahjongFace]) -> [Fan] {
+extension BloodyMahjong {
+    static func findBestFanGroup(closeHand: [IMahjongFace], openHand: [IMahjongFace]) -> [Fan] {
         // all the fans calculated bottom up
         var dict: [Fan:Bool] = [:]
         

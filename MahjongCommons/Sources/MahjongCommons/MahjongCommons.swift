@@ -6,6 +6,13 @@
 import RealityKit
 
 // MARK: Mahjong
+public protocol IMahjongStyle {
+    static var name: String {get}
+    static func findBestFanGroup(closeHand: [IMahjongFace], openHand: [IMahjongFace])->[Fan]
+    /// This method should be called to calculate the  player's shanten value: how many tile they need to reach tin-pai
+    static func calculateShanten(closeHand: [IMahjongFace], completeSets: Int)->Int
+}
+
 public protocol IMahjongFace {
     var mahjongType: MahjongType {get}
     var num: Int {get}

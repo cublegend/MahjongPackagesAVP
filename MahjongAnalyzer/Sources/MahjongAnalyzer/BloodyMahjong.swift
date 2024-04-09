@@ -8,8 +8,12 @@
 import Foundation
 import MahjongCommons
 
-public class BloodyAnalyzer: IMahjongAnalyzer {
-    public static func calculateShanten(closeHand: [IMahjongFace], completeSets: Int) -> Int {
+// TODO: implement rule enforcements and other style-specific actions
+// FIXME: also don't forget to extract common logics such as isPongPong(), etc. for other styles to use
+public class BloodyMahjong: IMahjongStyle {
+    public static var name = "Bloody Mahjong"
+    
+    static func calculateShanten(closeHand: [IMahjongFace], completeSets: Int) -> Int {
         let hand = parseMahjongs(closeHand)
         return calculateShanten(hand: hand, completeSets: completeSets)
     }
