@@ -34,6 +34,7 @@ class PlayerEntityManager {
         // 2. Second add player's 14 closeHand tile locations
         for i in 1...14 {
             let entity = Entity()
+            entity.name = "closeHand\(i)"
             let xOffset = 8 * MahjongEntity.TILE_WIDTH - MahjongEntity.TILE_WIDTH * Float(i)
             entity.position = SIMD3<Float>(xOffset, TableEntity.TABLE_HEIGHT + CLOSE_HAND_OFFSET_ON_PLANE, -2 * MahjongEntity.TILE_HEIGHT)
             
@@ -44,6 +45,7 @@ class PlayerEntityManager {
         for j in 0...3 { // row
             for i in 1...8 { // column
                 let entity = Entity()
+                entity.name = "discard\(i*j)"
                 let xOffset = MahjongEntity.TILE_WIDTH * Float(i) - 3 * MahjongEntity.TILE_WIDTH
                 entity.position = SIMD3<Float>(xOffset, TableEntity.TABLE_HEIGHT, 0 - TableEntity.TABLE_WIDTH / 2 + 2.5 * MahjongEntity.TILE_HEIGHT + Float(j) * MahjongEntity.TILE_HEIGHT)
                 
@@ -56,6 +58,7 @@ class PlayerEntityManager {
         for j in stride(from: 4, to: 0, by: -1) { // row
             for i in stride(from: 4, to: 0, by: -1) { // column
                 let entity = Entity()
+                entity.name = "openHand\(i)"
                 let xOffset = MahjongEntity.TILE_WIDTH * Float(i) + 5.8 * MahjongEntity.TILE_WIDTH
                 entity.position = SIMD3<Float>(xOffset, TableEntity.TABLE_HEIGHT, 0 - 5 * MahjongEntity.TILE_HEIGHT + Float(j) * MahjongEntity.TILE_HEIGHT)
                 

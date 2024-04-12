@@ -15,7 +15,7 @@ public class MahjongSet {
     public var lastTileDiscarded: MahjongEntity?
     
     public let rootEntity: Entity = Entity()
-    public var mahjongs: [MahjongEntity]
+    public var mahjongs: [MahjongEntity] = []
     
     // A bool array stores if the mahjong in current index is already drawn.
     private var mahjongIsDrown: [Bool] = []
@@ -27,8 +27,12 @@ public class MahjongSet {
         drawIndex >= MahjongSet.TOTAL_TILES || lastTileIndex < 0 || drawIndex > lastTileIndex
     }
     
-    @MainActor
     public init() {
+        rootEntity.name = "MahjongSet"
+    }
+    
+    @MainActor
+    public func loadMahjongsIntoMahjongSet() {
         mahjongs = ModelLoader.getMahjongs()
         reset()
     }

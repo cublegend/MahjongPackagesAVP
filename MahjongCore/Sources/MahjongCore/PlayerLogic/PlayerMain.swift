@@ -86,12 +86,12 @@ public class Player {
     /// A function that add a Mahjong tile to closed hand array.
     func addTilesToCloseHand(_ mahjongs: [MahjongEntity]) {
         for mahjong in mahjongs {
-            mahjong.owner = playerID
-            entityManager.resetTilePositionAndRotation(mahjong)
-            
-            entityManager.rotateTileFacingPlayer(mahjong)
-                        
+            let idx = handManager.closeHandArr.count
             handManager.addToCloseHandArr(mahjong)
+            mahjong.owner = playerID
+            entityManager.closeHandLocation[idx].addChild(mahjong)
+            entityManager.resetTilePositionAndRotation(mahjong)
+            entityManager.rotateTileFacingPlayer(mahjong)
             if mahjong.mahjongType == discardType {
                 discardTypeTiles.append(mahjong)
             } else {
