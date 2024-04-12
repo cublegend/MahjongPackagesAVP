@@ -13,6 +13,8 @@ import MahjongCommons
 public class BloodyMahjong: IMahjongStyle {
     public var name = "Bloody Mahjong"
     
+    public init() {}
+    
     public func calculateShanten(closeHand: [IMahjongFace], completeSets: Int) -> Int {
         BloodyMahjong.calculateShanten(closeHand: closeHand, completeSets: completeSets)
     }

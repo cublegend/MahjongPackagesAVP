@@ -82,7 +82,7 @@ extension Player {
     // MARK: The rest of the functions are internal, please access via Commands
     
     func pong(_ mahjong: MahjongEntity) {
-        MahjongSet.removeFromDiscardPile(mahjong)
+        mahjongSet.removeFromDiscardPile(mahjong)
         print("\(playerID) pong: \(mahjong.name)")
         mahjong.owner = playerID
         var tiles = [mahjong]
@@ -101,7 +101,7 @@ extension Player {
     }
     
     func kang(_ mahjong: MahjongEntity) {
-        MahjongSet.removeFromDiscardPile(mahjong)
+        mahjongSet.removeFromDiscardPile(mahjong)
         mahjong.owner = playerID
         var tiles = [mahjong]
         for t in handManager.closeHandArr {

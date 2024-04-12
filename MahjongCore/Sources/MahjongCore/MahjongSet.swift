@@ -11,8 +11,8 @@ import simd
 
 public class MahjongSet {
     public static let TOTAL_TILES = 108
-    public static var discardPile: [String: NSMutableArray] = [:]
-    public static var lastTileDiscarded: MahjongEntity?
+    public var discardPile: [String: NSMutableArray] = [:]
+    public var lastTileDiscarded: MahjongEntity?
     
     public let rootEntity: Entity = Entity()
     public var mahjongs: [MahjongEntity]
@@ -28,12 +28,12 @@ public class MahjongSet {
     }
     
     @MainActor
-    init() {
+    public init() {
         mahjongs = ModelLoader.getMahjongs()
         reset()
     }
     
-    func reset() {
+    public func reset() {
         mahjongIsDrown = []
         for mahjong in mahjongs {
             mahjong.isClickable = false

@@ -6,8 +6,8 @@
 //
 
 extension MahjongSet {
-    static func removeFromDiscardPile(_ tile: MahjongEntity) {
-        guard let dp = MahjongSet.discardPile[tile.owner] else { fatalError("No discard pile for \(tile.owner)")
+    func removeFromDiscardPile(_ tile: MahjongEntity) {
+        guard let dp = discardPile[tile.owner] else { fatalError("No discard pile for \(tile.owner)")
         }
         // if failed, no effect
        dp.remove(tile)

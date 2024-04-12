@@ -13,7 +13,7 @@ public protocol ICommand {
 }
 
 public class Commands {
-    public static func ExecuteCommand(command : ICommand) {
+    public static func executeCommand(_ command : ICommand) {
         command.Execute()
     }
 }
@@ -22,7 +22,7 @@ public class Commands {
 public class DrawCommand: ICommand {
     private let player : Player
     private let mahjong : MahjongEntity
-    init(player : Player, mahjong : MahjongEntity) {
+    public init(player : Player, mahjong : MahjongEntity) {
         self.player = player
         self.mahjong = mahjong
     }
@@ -35,7 +35,7 @@ public class DrawCommand: ICommand {
 public class DiscardCommand : ICommand {
     private let player : Player
     private let mahjong : MahjongEntity
-    init(player : Player, mahjong : MahjongEntity) {
+    public init(player : Player, mahjong : MahjongEntity) {
         self.player = player
         self.mahjong = mahjong
     }
@@ -48,7 +48,7 @@ public class DiscardCommand : ICommand {
 public class PongCommand : ICommand {
     private let player : Player
     private let mahjong : MahjongEntity
-    init(player : Player, mahjong : MahjongEntity) {
+    public init(player : Player, mahjong : MahjongEntity) {
         self.player = player
         self.mahjong = mahjong
     }
@@ -62,7 +62,7 @@ public class KangCommand : ICommand {
     private let player : Player
     private let mahjong : MahjongEntity
     private let selfKang : Bool
-    init(player : Player, mahjong : MahjongEntity, selfkang : Bool) {
+    public init(player : Player, mahjong : MahjongEntity, selfkang : Bool) {
         self.player = player
         self.mahjong = mahjong
         self.selfKang = selfkang
@@ -81,7 +81,7 @@ public class HuCommand : ICommand {
     private let player : Player
     private let mahjong : MahjongEntity?
     private let zimo: Bool
-    init(player : Player, mahjong : MahjongEntity?, zimo: Bool) {
+    public init(player : Player, mahjong : MahjongEntity?, zimo: Bool) {
         self.player = player
         self.mahjong = mahjong
         self.zimo = zimo
@@ -96,24 +96,11 @@ public class HuCommand : ICommand {
     }
 }
 
-public class SetDiscardTypeCommand: ICommand {
-    private let player : Player
-    private let type : MahjongType
-    init(player : Player, type : MahjongType) {
-        self.player = player
-        self.type = type
-    }
-    
-    public func Execute() {
-        player.setDiscardType(type)
-    }
-}
-
 public class SwitchTilesCommand : ICommand {
     private let players : [Player]
     private let switchTiles : [String : [MahjongEntity]]
     private let order : SwitchOrder
-    init(players: [Player], switchTiles: [String : [MahjongEntity]], order: SwitchOrder) {
+    public init(players: [Player], switchTiles: [String : [MahjongEntity]], order: SwitchOrder) {
         self.players = players
         self.switchTiles = switchTiles
         self.order = order

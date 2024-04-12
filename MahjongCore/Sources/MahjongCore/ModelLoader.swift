@@ -11,7 +11,7 @@ import RealityKit
 @MainActor
 public final class ModelLoader {
     private static var didStartLoading = false
-    private static var didFinishLoading = false
+    public static var didFinishLoading = false
     
     private static var table = [TableEntity]()
     private static var mahjongs = [MahjongEntity]()

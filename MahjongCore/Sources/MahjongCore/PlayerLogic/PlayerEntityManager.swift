@@ -20,9 +20,10 @@ class PlayerEntityManager {
     
     public var rootEntity = Entity()
     
-    init(rotation: simd_quatf) {
+    init(seat: PlayerSeat) {
         self.rootEntity.name = "player root"
-        self.rootEntity.transform.rotation = rotation
+        self.rootEntity.transform.rotation = seat.playerOrientation
+        setPlayerLocation(playerLocation: seat.playerPosition)
     }
     
     /// A function that set the player's position relative to the table. Also set the position for their closed hand cards.

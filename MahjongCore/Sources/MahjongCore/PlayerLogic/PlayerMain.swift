@@ -11,27 +11,34 @@ import MahjongAnalyzer
 
 // TODO: make IMahjongAnalyzer a rule enum to be used in both analysis and rules and other things
 @Observable
-class Player {
+public class Player {
     public var playerID: String
+    public let style: IMahjongStyle
+    public let mahjongSet: MahjongSet
+    public var closeHand:[MahjongEntity] { handManager.closeHandArr }
+    public var numCompleteSet:Int { openHandCompleteSets.count }
+    
     let entityManager: PlayerEntityManager
     let handManager: PlayerHandManager
-    let style: IMahjongStyle
     
+    // FIXME: Bloody rules!
     private(set) public var discardType: MahjongType? = .none
     public var discardTypeTiles: [MahjongEntity] = []
-    public var possibleKangTiles: [MahjongEntity] = []
     
+    public var possibleKangTiles: [MahjongEntity] = []
     var kangedTileFaces: [IMahjongFace] = []
     var openHandCompleteSets = [String: [Int]]() // A helper var to store openHand
     
     // fan calculation flags
     var fans: [Fan] = []
     
-    init(playerId: String, rotation: simd_quatf, discardPile: NSMutableArray, style: IMahjongStyle) {
+    public init(playerId: String, seat: PlayerSeat, table: TableEntity, mahjongSet: MahjongSet, discardPile: NSMutableArray, style: IMahjongStyle) {
         self.playerID = playerId
         handManager = PlayerHandManager(discardPile: discardPile)
-        entityManager = PlayerEntityManager(rotation: rotation)
+        entityManager = PlayerEntityManager(seat: seat)
         self.style = style
+        self.mahjongSet = mahjongSet
+        table.addChild(entityManager.rootEntity)
     }
     
     public func resetPlayer() {
@@ -60,7 +67,8 @@ class Player {
     
     func discardTileOperation(_ mahjong: MahjongEntity) {
         if !canDiscardTile(mahjong: mahjong) {
-            fatalError("Can't discard this tile!")
+            print("Can't discard this tile!")
+            return
         }
         removeTilesFromCloseHand([mahjong])
         addTileToDiscardPile(mahjong)
@@ -137,7 +145,7 @@ class Player {
         let idx = handManager.discardPileRef.count
         entityManager.discardLocation[idx].addChild(mahjong)
         
-        MahjongSet.lastTileDiscarded = mahjong
+        mahjongSet.lastTileDiscarded = mahjong
         handManager.addToDiscardPileArr(mahjong)
         
         print("\(self.playerID) add to discard pile index: ", idx)
@@ -169,7 +177,7 @@ class Player {
     }
     
     /// validate tile actions
-    func canDiscardTile(mahjong: MahjongEntity)->Bool {
+    public func canDiscardTile(mahjong: MahjongEntity)->Bool {
         guard let suit = discardType else {
             fatalError("discarding tile before setting discard type!")
         }

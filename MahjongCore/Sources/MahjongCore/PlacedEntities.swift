@@ -40,20 +40,19 @@ public class PlacedObject: Entity {
 public class MahjongEntity: PlacedObject, IMahjongFace, HasModel {
     public let mahjongType: MahjongType
     public let num: Int
-    public let boundingBox: BoundingBox
     let originRotation: simd_quatf
     let originalMaterials: [Material]?
     
     public var owner = ""
     public var isHolding = false
     
-    static let clickableCollisionGroup = CollisionGroup(rawValue: 1 << 25)
+    public static let clickableCollisionGroup = CollisionGroup(rawValue: 1 << 25)
     
     private(set) static public var TILE_THICK: Float = 0
     private(set) static public var TILE_WIDTH: Float = 0
     private(set) static public var TILE_HEIGHT: Float = 0
     
-    var isHighlighted: Bool = false {
+    public var isHighlighted: Bool = false {
         didSet {
             guard isHighlighted != oldValue else { return }
             if isHighlighted {
@@ -66,7 +65,7 @@ public class MahjongEntity: PlacedObject, IMahjongFace, HasModel {
         }
     }
     
-    var isClickable: Bool = false {
+    public var isClickable: Bool = false {
         didSet {
             guard isClickable != oldValue else { return }
             if isClickable {
@@ -81,7 +80,19 @@ public class MahjongEntity: PlacedObject, IMahjongFace, HasModel {
         }
     }
     
-    var affectedByPhysics = false {
+    public var isSelected: Bool = false {
+        didSet {
+            guard isSelected != oldValue else { return }
+            if isSelected {
+                position.y += 1.5 * MahjongEntity.TILE_HEIGHT
+            } else {
+                position.y -= 1.5 * MahjongEntity.TILE_HEIGHT
+            }
+            
+        }
+    }
+    
+    public var affectedByPhysics = false {
         didSet {
             guard affectedByPhysics != oldValue else { return }
             if affectedByPhysics {
@@ -116,13 +127,12 @@ public class MahjongEntity: PlacedObject, IMahjongFace, HasModel {
             fatalError( "Input File Error" )
         }
         
-        boundingBox = shapes[0].bounds
         originRotation = renderContentToClone.transform.rotation
         originalMaterials = renderContentToClone.model?.materials
 
         super.init(fileName: fileName, renderContentToClone: renderContentToClone)
         
-        setMahjongDimension(boundingBox: boundingBox)
+        setMahjongDimension(boundingBox: shapes[0].bounds)
         
         // Make the object respond to gravity.
         let physicsMaterial = PhysicsMaterialResource.generate(restitution: 0.0)
@@ -168,6 +178,7 @@ public class TableEntity: PlacedObject {
         previewEntity.applyMaterial(UnlitMaterial(color: .gray.withAlphaComponent(0.5)))
         components.set(CollisionComponent(shapes: shapes, isStatic: false,
                                           filter: CollisionFilter(group: PlacedObject.defaultCollisionGroup, mask: .all)))
+        setTableDimension(boundingBox: shapes[0].bounds)
     }
     
     func setTableDimension(boundingBox: BoundingBox){
