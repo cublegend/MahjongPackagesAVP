@@ -99,7 +99,7 @@ public class Player {
                 // check if can kang
                 let hand = handManager.getCompleteHandArr()
                 if hand.filter({$0.sameAs(mahjong)}).count == 4 {
-                    if possibleKangTiles.filter ({$0.sameAs(mahjong)}).count == 0 {
+                    if possibleKangTiles.filter ({$0.sameAs(mahjong)}).isEmpty {
                         possibleKangTiles.append(mahjong)
                     }
                 }

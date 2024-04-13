@@ -50,7 +50,9 @@ extension Player {
             if currentTile.sameAs(t) {
                 count+=1
                 if count == 4 && t.mahjongType != discardType {
-                    possibleKangTiles.append(currentTile)
+                    if possibleKangTiles.filter({ $0.sameAs(currentTile) }).isEmpty {
+                        possibleKangTiles.append(currentTile)
+                    }
                 }
             } else {
                 currentTile = t
