@@ -103,7 +103,7 @@ public class MahjongEntity: PlacedObject, IMahjongFace, HasModel {
         }
     }
     
-    var isBeingDragged = false {
+    public var isBeingDragged = false {
         didSet {
             affectedByPhysics = !isBeingDragged
         }
