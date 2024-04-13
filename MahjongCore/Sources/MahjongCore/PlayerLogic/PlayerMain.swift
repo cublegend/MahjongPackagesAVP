@@ -17,6 +17,7 @@ public class Player {
     public let mahjongSet: MahjongSet
     public var closeHand:[MahjongEntity] { handManager.closeHandArr }
     public var numCompleteSet:Int { openHandCompleteSets.count }
+    public var rootEntity: Entity { entityManager.rootEntity }
     
     let entityManager: PlayerEntityManager
     let handManager: PlayerHandManager
@@ -147,15 +148,12 @@ public class Player {
         
         mahjongSet.lastTileDiscarded = mahjong
         handManager.addToDiscardPileArr(mahjong)
-        
-        print("\(self.playerID) add to discard pile index: ", idx)
     }
     
     // TODO: need clarification
     func addTilesToOpenHand(mahjongs: [MahjongEntity]) {
         for mahjong in mahjongs {
             entityManager.resetTilePositionAndRotation(mahjong)
-            
             entityManager.rotateTileFacingUp(mahjong)
             
             if openHandCompleteSets[mahjong.name] == nil {

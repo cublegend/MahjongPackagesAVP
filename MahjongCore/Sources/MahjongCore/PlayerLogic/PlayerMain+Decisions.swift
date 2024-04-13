@@ -82,10 +82,9 @@ extension Player {
     // MARK: The rest of the functions are internal, please access via Commands
     
     func pong(_ mahjong: MahjongEntity) {
-        mahjongSet.removeFromDiscardPile(mahjong)
         print("\(playerID) pong: \(mahjong.name)")
         mahjong.owner = playerID
-        var tiles = [mahjong]
+        var tiles:[MahjongEntity] = []
         for t in handManager.closeHandArr {
             if t.sameAs(mahjong) {
                 tiles.append(t)
@@ -94,16 +93,17 @@ extension Player {
                 }
             }
         }
+        mahjongSet.removeFromDiscardPile(mahjong)
         removeTilesFromCloseHand(tiles)
+        
         tiles.append(mahjong)
         addTilesToOpenHand(mahjongs: tiles)
         sortCloseHand()
     }
     
     func kang(_ mahjong: MahjongEntity) {
-        mahjongSet.removeFromDiscardPile(mahjong)
         mahjong.owner = playerID
-        var tiles = [mahjong]
+        var tiles:[MahjongEntity] = []
         for t in handManager.closeHandArr {
             if t.sameAs(mahjong) {
                 tiles.append(t)
@@ -112,6 +112,11 @@ extension Player {
                 }
             }
         }
+        
+        mahjongSet.removeFromDiscardPile(mahjong)
+        removeTilesFromCloseHand(tiles)
+        
+        tiles.append(mahjong)
         addTilesToOpenHand(mahjongs: tiles)
         kangedTileFaces.append(mahjong)
         possibleKangTiles.removeAll(where: {$0.sameAs(mahjong)})
@@ -125,6 +130,7 @@ extension Player {
                 tiles.append(t)
             }
         }
+        removeTilesFromCloseHand(tiles)
         addTilesToOpenHand(mahjongs: tiles)
         kangedTileFaces.append(mahjong)
         possibleKangTiles.removeAll(where: {$0.sameAs(mahjong)})
