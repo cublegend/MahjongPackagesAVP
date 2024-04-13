@@ -31,7 +31,7 @@ public class Player {
     var openHandCompleteSets = [String: [Int]]() // A helper var to store openHand
     
     // fan calculation flags
-    var fans: [Fan] = []
+    public var fans: [Fan] = []
     
     public init(playerId: String, seat: PlayerSeat, table: TableEntity, mahjongSet: MahjongSet, style: IMahjongStyle) {
         self.playerID = playerId

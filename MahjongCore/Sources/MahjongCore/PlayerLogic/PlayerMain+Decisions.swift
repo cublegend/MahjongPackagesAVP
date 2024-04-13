@@ -72,7 +72,7 @@ extension Player {
         for t in handManager.closeHandArr {
             if t.sameAs(mahjong) {
                 tiles.append(t)
-                if tiles.count == 3 {
+                if tiles.count == 2 {
                     break
                 }
             }
@@ -125,12 +125,14 @@ extension Player {
     
     func hu(_ mahjong: MahjongEntity) {
         print("\(playerID) hu!")
-//        fans = HandUtil.FindBestFans(closeHand: closedHand, openHand: openHand, fans: fans)
+        fans = style.findBestFanGroup(closeHand: handManager.closeHandArr, openHand: handManager.openHandArr)
+        print("Fan: \(fans.map({$0.name}))")
     }
     
     func zimo() {
         print("\(playerID) zimo!")
-//        fans = HandUtil.FindBestFans(closeHand: closedHand, openHand: openHand, fans: fans)
+        fans = style.findBestFanGroup(closeHand: handManager.closeHandArr, openHand: handManager.openHandArr)
+        print("Fan: \(fans.map({$0.name}))")
     }
 }
 
