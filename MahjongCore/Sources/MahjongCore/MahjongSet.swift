@@ -49,6 +49,8 @@ public class MahjongSet {
             mahjongIsDrown.append(false)
         }
         
+        discardPile = [:]
+        lastTileDiscarded = nil
         drawIndex = 0
         lastTileIndex = 107
 

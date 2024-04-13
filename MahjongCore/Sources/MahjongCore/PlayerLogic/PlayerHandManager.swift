@@ -14,16 +14,13 @@ class PlayerHandManager {
     private(set) var lastDrawTile: MahjongEntity?
     private(set) var closeHandArr: [MahjongEntity] = []
     private(set) var openHandArr: [MahjongEntity] = []
-    private(set) var discardPileRef: NSMutableArray
     
-    init(discardPile: NSMutableArray) {
-        self.discardPileRef = discardPile
+    init() {
     }
     
     func resetHandArr() {
         closeHandArr.removeAll()
         openHandArr.removeAll()
-        discardPileRef.removeAllObjects()
         lastDrawTile = nil
     }
     
@@ -33,10 +30,6 @@ class PlayerHandManager {
     
     func addToCloseHandArr(_ tile: MahjongEntity) {
         closeHandArr.append(tile)
-    }
-    
-    func addToDiscardPileArr(_ tile: MahjongEntity) {
-        discardPileRef.add(tile)
     }
     
     func addToOpenHandArr(_ tile: MahjongEntity) {

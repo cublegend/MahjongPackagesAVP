@@ -42,21 +42,6 @@ extension Player {
     }
     
     public func canSelfKang() -> Bool {
-        var hand = handManager.getCompleteHandArr()
-        sortTiles(&hand)
-        var count = 0
-        var currentTile = hand[0]
-        for t in hand {
-            if currentTile.sameAs(t) {
-                count+=1
-                if count == 4 && t.mahjongType != discardType {
-                    possibleKangTiles.append(currentTile)
-                }
-            } else {
-                currentTile = t
-                count = 0
-            }
-        }
         return possibleKangTiles.count > 0
     }
     
@@ -83,7 +68,6 @@ extension Player {
     
     func pong(_ mahjong: MahjongEntity) {
         print("\(playerID) pong: \(mahjong.name)")
-        mahjong.owner = playerID
         var tiles:[MahjongEntity] = []
         for t in handManager.closeHandArr {
             if t.sameAs(mahjong) {
@@ -93,8 +77,9 @@ extension Player {
                 }
             }
         }
-        mahjongSet.removeFromDiscardPile(mahjong)
+        mahjongSet.removeFromDiscardPile(mahjong, from: mahjong.owner)
         removeTilesFromCloseHand(tiles)
+        mahjong.owner = playerID
         
         tiles.append(mahjong)
         addTilesToOpenHand(mahjongs: tiles)
@@ -102,18 +87,18 @@ extension Player {
     }
     
     func kang(_ mahjong: MahjongEntity) {
-        mahjong.owner = playerID
         var tiles:[MahjongEntity] = []
         for t in handManager.closeHandArr {
             if t.sameAs(mahjong) {
                 tiles.append(t)
-                if tiles.count == 4 {
+                if tiles.count == 3 {
                     break
                 }
             }
         }
         
-        mahjongSet.removeFromDiscardPile(mahjong)
+        mahjongSet.removeFromDiscardPile(mahjong, from: mahjong.owner)
+        mahjong.owner = playerID
         removeTilesFromCloseHand(tiles)
         
         tiles.append(mahjong)
@@ -130,6 +115,7 @@ extension Player {
                 tiles.append(t)
             }
         }
+        print("selfkang of tile count: \(tiles.count)")
         removeTilesFromCloseHand(tiles)
         addTilesToOpenHand(mahjongs: tiles)
         kangedTileFaces.append(mahjong)

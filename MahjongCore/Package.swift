@@ -29,6 +29,6 @@ let package = Package(
             ]),
         .testTarget(
             name: "MahjongCoreTests",
-            dependencies: ["MahjongCore"]),
+            dependencies: ["MahjongCore", "MahjongCommons"]),
     ]
 )
