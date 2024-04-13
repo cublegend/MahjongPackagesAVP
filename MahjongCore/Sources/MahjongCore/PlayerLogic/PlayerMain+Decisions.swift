@@ -42,23 +42,6 @@ extension Player {
     }
     
     public func canSelfKang() -> Bool {
-        var hand = handManager.getCompleteHandArr()
-        sortTiles(&hand)
-        var count = 0
-        var currentTile = hand[0]
-        for t in hand {
-            if currentTile.sameAs(t) {
-                count+=1
-                if count == 4 && t.mahjongType != discardType {
-                    if possibleKangTiles.filter({ $0.sameAs(currentTile) }).isEmpty {
-                        possibleKangTiles.append(currentTile)
-                    }
-                }
-            } else {
-                currentTile = t
-                count = 0
-            }
-        }
         return possibleKangTiles.count > 0
     }
     
