@@ -103,7 +103,7 @@ public class MahjongEntity: PlacedObject, IMahjongFace, HasModel {
         }
     }
     
-    var isBeingDragged = false {
+    public var isBeingDragged = false {
         didSet {
             affectedByPhysics = !isBeingDragged
         }
@@ -136,7 +136,7 @@ public class MahjongEntity: PlacedObject, IMahjongFace, HasModel {
         
         // Make the object respond to gravity.
         let physicsMaterial = PhysicsMaterialResource.generate(restitution: 0.0)
-        let physicsBodyComponent = PhysicsBodyComponent(shapes: shapes, mass: 1.0, material: physicsMaterial, mode: .static)
+        let physicsBodyComponent = PhysicsBodyComponent(shapes: shapes, mass: 5.0, material: physicsMaterial, mode: .static)
         
         components.set(physicsBodyComponent)
         components.set(CollisionComponent(shapes: shapes, isStatic: false,
@@ -176,6 +176,11 @@ public class TableEntity: PlacedObject {
         super.init(fileName: fileName, renderContentToClone: renderContentToClone)
 
         previewEntity.applyMaterial(UnlitMaterial(color: .gray.withAlphaComponent(0.5)))
+        
+        let physicsMaterial = PhysicsMaterialResource.generate(restitution: 0.0)
+        let physicsBodyComponent = PhysicsBodyComponent(shapes: shapes, mass: 40.0, material: physicsMaterial, mode: .static)
+        
+        components.set(physicsBodyComponent)
         components.set(CollisionComponent(shapes: shapes, isStatic: false,
                                           filter: CollisionFilter(group: PlacedObject.defaultCollisionGroup, mask: .all)))
         setTableDimension(boundingBox: shapes[0].bounds)
