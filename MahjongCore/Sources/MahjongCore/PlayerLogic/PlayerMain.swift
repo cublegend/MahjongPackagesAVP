@@ -33,9 +33,10 @@ public class Player {
     // fan calculation flags
     var fans: [Fan] = []
     
-    public init(playerId: String, seat: PlayerSeat, table: TableEntity, mahjongSet: MahjongSet, discardPile: NSMutableArray, style: IMahjongStyle) {
+    public init(playerId: String, seat: PlayerSeat, table: TableEntity, mahjongSet: MahjongSet, style: IMahjongStyle) {
         self.playerID = playerId
-        handManager = PlayerHandManager(discardPile: discardPile)
+        mahjongSet.discardPile[playerId] = []
+        handManager = PlayerHandManager()
         entityManager = PlayerEntityManager(seat: seat)
         self.style = style
         self.mahjongSet = mahjongSet
@@ -145,14 +146,24 @@ public class Player {
         
         entityManager.rotateTileFacingUp(mahjong)
         
-        let idx = handManager.discardPileRef.count
+        let idx = mahjongSet.discardPile[playerID]!.count
         entityManager.discardLocation[idx].addChild(mahjong)
         
         mahjongSet.lastTileDiscarded = mahjong
-        handManager.addToDiscardPileArr(mahjong)
+        mahjongSet.addToDiscardPile(mahjong, to: playerID)
     }
     
-    // TODO: need clarification
+    /**
+     * [
+     *      "Tiao_1",   "Tiao_1",   "Tiao_1",
+     *      "Tong_2", "Tong_2",    "Tong_2"
+     * ]
+     * example: ["Tong_2": [current: 2, index: 0, curr position: 0 * 4 + current = 2]]
+     * example: ["Tiao_1": [current: 2, index: 1, curr position: 1 * 4 + current = 6]]
+     * example: new "Wan_3". Does not contain in openHandCompleteSets.
+     * openHandCompleteSets["Wan_3"] = [2, openHandCompleteSets.count, openHandCompleteSets.count * 4 + current]
+     *
+     **/
     func addTilesToOpenHand(mahjongs: [MahjongEntity]) {
         for mahjong in mahjongs {
             entityManager.resetTilePositionAndRotation(mahjong)
